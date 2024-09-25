@@ -5,6 +5,7 @@ import sys
 from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, 
                              QLineEdit, QPushButton, QVBoxLayout,
                              QHBoxLayout)
+from PyQt5.QtCore import Qt
 
 class WeatherApp(QWidget):
   def __init__(self):
@@ -30,6 +31,12 @@ class WeatherApp(QWidget):
     vbox.addWidget(self.description_label)
     
     self.setLayout(vbox)
+    
+    self.city_label.setAlignment(Qt.AlignCenter)
+    self.city_input.setAlignment(Qt.AlignCenter)
+    self.temperature_label.setAlignment(Qt.AlignCenter)
+    self.emoji_label.setAlignment(Qt.AlignCenter)
+    self.description_label.setAlignment(Qt.AlignCenter)
 
 def main():
   app = QApplication(sys.argv)
