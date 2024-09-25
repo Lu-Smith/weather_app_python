@@ -1,7 +1,7 @@
 # Weather App
-#Api_key = 3273a6c7e829f1ec80c2549464a55454
 
 import sys
+import requests
 from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, 
                              QLineEdit, QPushButton, QVBoxLayout)
 from PyQt5.QtCore import Qt
@@ -12,16 +12,15 @@ class WeatherApp(QWidget):
     self.city_label = QLabel("Enter city name: ", self)
     self.city_input = QLineEdit(self)
     self.get_weather_button = QPushButton("Get Weather", self)
-    self.temperature_label = QLabel("70°F", self)
-    self.emoji_label = QLabel("🌞", self)
-    self.description_label = QLabel("Sunny", self)
+    self.temperature_label = QLabel(self)
+    self.emoji_label = QLabel(self)
+    self.description_label = QLabel(self)
     self.initUI()
     
   def initUI(self):
     self.setWindowTitle("Weather App")
     
     #layout
-    
     vbox = QVBoxLayout()
     
     vbox.addWidget(self.city_label)
@@ -40,7 +39,6 @@ class WeatherApp(QWidget):
     self.description_label.setAlignment(Qt.AlignCenter)
     
     #styling
-    
     self.city_label.setObjectName("city_label")
     self.city_input.setObjectName("city_input")
     self.get_weather_button.setObjectName("get_weather_button")
@@ -76,8 +74,15 @@ class WeatherApp(QWidget):
       }
     """)
     
+    #connect
+    self.get_weather_button.clicked.connect(self.get_weather)
+    
   def get_weather(self):
-    pass
+    api_key = "3273a6c7e829f1ec80c2549464a55454"
+    city = self.city_input.text()
+    url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}"
+    
+    response = requests.get(url)
   
   def display_error(self, message):
     pass
