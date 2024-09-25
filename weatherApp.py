@@ -12,6 +12,12 @@ class WeatherApp(QWidget):
     self.city_input = QLineEdit(self)
     self.get_weather_button = QPushButton("Get Weather", self)
     self.temperature_label = QLabel("70°F", self)
+    self.emoji_label = QLabel("🌞", self)
+    self.description_label = QLabel("Sunny", self)
+    self.initUI()
+    
+  def initUI(self):
+    pass
 
 def main():
   app = QApplication(sys.argv)
