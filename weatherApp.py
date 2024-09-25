@@ -3,7 +3,8 @@
 
 import sys
 from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, 
-                             QLineEdit, QPushButton)
+                             QLineEdit, QPushButton, QVBoxLayout,
+                             QHBoxLayout)
 
 class WeatherApp(QWidget):
   def __init__(self):
@@ -17,7 +18,18 @@ class WeatherApp(QWidget):
     self.initUI()
     
   def initUI(self):
-    pass
+    self.setWindowTitle("Weather App")
+    
+    vbox = QVBoxLayout()
+    
+    vbox.addWidget(self.city_label)
+    vbox.addWidget(self.city_input)
+    vbox.addWidget(self.get_weather_button)
+    vbox.addWidget(self.temperature_label)
+    vbox.addWidget(self.emoji_label)
+    vbox.addWidget(self.description_label)
+    
+    self.setLayout(vbox)
 
 def main():
   app = QApplication(sys.argv)
