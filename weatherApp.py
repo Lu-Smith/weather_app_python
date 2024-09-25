@@ -76,7 +76,14 @@ class WeatherApp(QWidget):
       }
     """)
     
-    
+  def get_weather(self):
+    pass
+  
+  def display_error(self, message):
+    pass
+  
+  def display_weather(self, data):
+    pass
     
 
 def main():
