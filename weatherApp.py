@@ -3,7 +3,8 @@
 import sys
 import requests
 from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, 
-                             QLineEdit, QPushButton, QVBoxLayout)
+                             QLineEdit, QPushButton, QVBoxLayout, 
+                             QDesktopWidget)
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 
@@ -21,6 +22,10 @@ class WeatherApp(QWidget):
   def initUI(self):
     self.setWindowTitle("Weather App")
     self.setWindowIcon(QIcon("sun.png"))
+    self.resize(300, 500)
+    
+    #center
+    self.center()
     
     #layout
     vbox = QVBoxLayout()
@@ -53,7 +58,7 @@ class WeatherApp(QWidget):
         font-family: calibri;
       }   
       QLabel#city_label{
-        font-size: 30px;
+        font-size: 20px;
         font-style: italic;
       } 
       QLineEdit#city_input{
@@ -78,6 +83,11 @@ class WeatherApp(QWidget):
     
     #connect
     self.get_weather_button.clicked.connect(self.get_weather)
+    
+  def center(self):
+    screen = QDesktopWidget().availableGeometry().center()
+    frame = self.frameGeometry()
+    frame.moveCenter(screen)
     
   def get_weather(self):
     api_key = "3273a6c7e829f1ec80c2549464a55454"
@@ -165,7 +175,7 @@ class WeatherApp(QWidget):
       return "☁️"
     else: 
       return ""
-
+    
 def main():
   app = QApplication(sys.argv)
   weather_app = WeatherApp()
