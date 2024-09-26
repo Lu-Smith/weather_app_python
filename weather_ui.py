@@ -1,12 +1,7 @@
-# Weather App
-
-import sys
-import requests
-from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, 
-                             QLineEdit, QPushButton, QVBoxLayout, 
-                             QDesktopWidget)
+from PyQt5.QtWidgets import QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QDesktopWidget
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
+import requests
 
 class WeatherApp(QWidget):
   def __init__(self):
@@ -93,7 +88,7 @@ class WeatherApp(QWidget):
     api_key = "3273a6c7e829f1ec80c2549464a55454"
     city = self.city_input.text()
     url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}"
-    
+  
     try:
       response = requests.get(url)
       response.raise_for_status()
@@ -129,14 +124,7 @@ class WeatherApp(QWidget):
       self.display_error("To many Redirects:\nCheck the URL.")
     except requests.exceptions.RequestException as req_error:
       self.display_error(f"Requesst Error:\n{req_error}")
-    
-  
-  def display_error(self, message):
-    self.temperature_label.setStyleSheet("font-size: 15px; color: #8c2220")
-    self.temperature_label.setText(message)
-    self.emoji_label.clear()
-    self.description_label.clear()
-  
+
   def display_weather(self, data):
     #temperature
     self.temperature_label.setStyleSheet("font-size: 75px; color: black")
@@ -150,6 +138,12 @@ class WeatherApp(QWidget):
     #descritpion
     weather_description = data["weather"][0]["description"]
     self.description_label.setText(f"{weather_description}")
+    
+  def display_error(self, message):
+    self.temperature_label.setStyleSheet("font-size: 15px; color: #8c2220")
+    self.temperature_label.setText(message)
+    self.emoji_label.clear()
+    self.description_label.clear()
     
   @staticmethod
   def get_weather_emoji(weather_id):
@@ -175,12 +169,4 @@ class WeatherApp(QWidget):
       return "☁️"
     else: 
       return ""
-    
-def main():
-  app = QApplication(sys.argv)
-  weather_app = WeatherApp()
-  weather_app.show()
-  sys.exit(app.exec_())  
-
-if __name__ =="__main__":
-  main()
+  
