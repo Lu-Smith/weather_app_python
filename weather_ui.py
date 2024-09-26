@@ -87,6 +87,9 @@ class WeatherApp(QWidget):
   def get_weather(self):
     api_key = "3273a6c7e829f1ec80c2549464a55454"
     city = self.city_input.text()
+    if not city.replace(" ", "").isalpha(): 
+      self.display_error("Invalid city name! Only alphabetic characters are allowed.")
+      return
     url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}"
   
     try:
