@@ -5,6 +5,7 @@ import requests
 from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, 
                              QLineEdit, QPushButton, QVBoxLayout)
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QIcon
 
 class WeatherApp(QWidget):
   def __init__(self):
@@ -19,6 +20,7 @@ class WeatherApp(QWidget):
     
   def initUI(self):
     self.setWindowTitle("Weather App")
+    self.setWindowIcon(QIcon("sun.png"))
     
     #layout
     vbox = QVBoxLayout()
@@ -98,9 +100,9 @@ class WeatherApp(QWidget):
         case 401:
           self.display_error("Forbidden:\nAccess is denied.")
         case 402:
-          self.display_error("Not found:\nCity is not found.")
-        case 404:
           self.display_error("Internal Server Error:\nPlease try again later.")
+        case 404:
+          self.display_error("Not found:\nCity is not found.")
         case 500:
           self.display_error("Bad Gateway:\nInvalid response from the server.")
         case 502:
@@ -122,6 +124,8 @@ class WeatherApp(QWidget):
   def display_error(self, message):
     self.temperature_label.setStyleSheet("font-size: 15px; color: #8c2220")
     self.temperature_label.setText(message)
+    self.emoji_label.clear()
+    self.description_label.clear()
   
   def display_weather(self, data):
     #temperature
