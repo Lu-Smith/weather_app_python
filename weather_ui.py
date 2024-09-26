@@ -14,6 +14,7 @@ class WeatherApp(QWidget):
     self.temperature_label = QLabel(self)
     self.emoji_label = QLabel(self)
     self.description_label = QLabel(self)
+    self.current_temperature_k = None 
     self.initUI()
     
   def initUI(self):
@@ -86,7 +87,9 @@ class WeatherApp(QWidget):
     
     #connect
     self.get_weather_button.clicked.connect(self.get_weather)
-    
+    self.temp_f_button.clicked.connect(self.show_temperature_in_fahrenheit)
+    self.temp_c_button.clicked.connect(self.show_temperature_in_celsius)
+        
   def center(self):
     screen = QDesktopWidget().availableGeometry().center()
     frame = self.frameGeometry()
@@ -139,10 +142,9 @@ class WeatherApp(QWidget):
   def display_weather(self, data):
     #temperature
     self.temperature_label.setStyleSheet("font-size: 75px; color: black")
-    temperature_k = data["main"]["temp"]
-    temperature_c = temperature_k - 273.15
-    temperature_f = (temperature_k * 9/5) - 459.67
-    self.temperature_label.setText(f"{temperature_f:.0f}°F")
+    self.current_temperature_k = data["main"]["temp"]
+    self.show_temperature_in_fahrenheit()
+    
     #emoji
     weather_id = data["weather"][0]["id"]
     self.emoji_label.setText(self.get_weather_emoji(weather_id))
@@ -180,4 +182,13 @@ class WeatherApp(QWidget):
       return "☁️"
     else: 
       return ""
-  
+    
+  def show_temperature_in_fahrenheit(self):
+        if self.current_temperature_k is not None:
+            temperature_f = (self.current_temperature_k * 9/5) - 459.67
+            self.temperature_label.setText(f"{temperature_f:.0f}°F")
+
+  def show_temperature_in_celsius(self):
+      if self.current_temperature_k is not None:
+          temperature_c = self.current_temperature_k - 273.15
+          self.temperature_label.setText(f"{temperature_c:.0f}°C")
